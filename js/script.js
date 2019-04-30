@@ -35,7 +35,7 @@ window.addEventListener('DOMContentLoaded', function() {
   });
 });
 
-
+// прокрутка (scroll)
 let goTo = document.querySelectorAll('.container ul li a');
 
 goTo.forEach(item => {
