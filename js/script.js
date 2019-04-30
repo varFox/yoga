@@ -50,3 +50,36 @@ goTo.forEach(item => {
     });
   });  
 })
+
+
+// таймер
+function zero(a) {
+  if (a < 10) {
+    a = '0' + a;
+  }
+  return a;
+}
+
+const timer = document.querySelector('#timer'),
+      hs = timer.querySelector('.hours'),
+      ms = timer.querySelector('.minutes'),
+      ss = timer.querySelector('.seconds');
+
+function time(h, m, s) {
+  let hours = h,
+      minutes = m,
+      seconds = s;     
+  let t = setInterval(function() {
+    hs.textContent = zero(hours);
+    ms.textContent = zero(minutes);
+    ss.textContent = zero(seconds);
+    (seconds > 0) ? seconds -=1 : (seconds == 0 && minutes > 0) 
+                  ? (seconds = 59, minutes -= 1) : (seconds == 0 && minutes == 0 && hours > 0) 
+                  ? (seconds = 59, minutes = 59, hours -= 1) 
+                  : (clearInterval(t), hs.textContent = '00', ms.textContent = '00', ss.textContent = '00');
+    
+
+  }, 1000);
+}
+
+time(10, 0, 0);
