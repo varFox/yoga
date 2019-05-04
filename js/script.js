@@ -113,7 +113,7 @@ window.addEventListener('DOMContentLoaded', function() {
   more.addEventListener('click', () => {
     overlay.style.display = 'block';
     popup.style.top = "50px";
-    if (navigator.appName == 'Microsoft Internet Explorer') {
+    if (navigator.userAgent.match(/MSIE/i)) {
       overlay.classList.add('fade');
     } else if (isMobile()) {
     } else {
@@ -125,8 +125,6 @@ window.addEventListener('DOMContentLoaded', function() {
         else {
           a += 2;
           popup.style.top = a + 'px';
-          console.log(a);
-          console.log(popup.style.top);
         }
       }, 20)
     }
@@ -139,7 +137,7 @@ window.addEventListener('DOMContentLoaded', function() {
     overlay.style.display = 'none';
     more.classList.remove('more-splash');
     document.body.style.overflow = '';
-    if (navigator.appName == 'Microsoft Internet Explorer') {
+    if (navigator.userAgent.match(/MSIE/i)) {
       overlay.classList.remove('fade');
     }
   });
@@ -150,7 +148,7 @@ window.addEventListener('DOMContentLoaded', function() {
     item.addEventListener('click', () => {
       overlay.style.display = 'block';
       popup.style.top = "50px";
-      if (navigator.appName == 'Microsoft Internet Explorer') {
+      if (navigator.userAgent.match(/MSIE/i)) {
         overlay.classList.add('fade');
       } else if (isMobile()) {
       } else {
