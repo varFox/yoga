@@ -112,33 +112,32 @@ window.addEventListener('DOMContentLoaded', function() {
 
   more.addEventListener('click', () => {
     overlay.style.display = 'block';
-    popup.style.top = "50px";
     if (navigator.userAgent.match(/MSIE|Edge/i)) {
       overlay.classList.add('fade');
+      popup.classList.add('more-splash');
     } else if (isMobile()) {
     } else {
       let a = 0;
+      popup.style.top = "50px";
       let timer = setInterval(function() {
         if (popup.style.top == '150px') {
           clearInterval(timer);
-        }
-        else {
+        } else {
           a += 2;
           popup.style.top = a + 'px';
         }
       }, 20)
     }
-    
-    more.classList.add('more-splash');
     document.body.style.overflow = 'hidden';
   });
 
+
   close.addEventListener('click', () => {
     overlay.style.display = 'none';
-    more.classList.remove('more-splash');
     document.body.style.overflow = '';
     if (navigator.userAgent.match(/MSIE|Edge/i)) {
       overlay.classList.remove('fade');
+      popup.classList.remove('more-splash');
     }
   });
 
@@ -147,25 +146,22 @@ window.addEventListener('DOMContentLoaded', function() {
   description.forEach(item => {
     item.addEventListener('click', () => {
       overlay.style.display = 'block';
-      popup.style.top = "50px";
       if (navigator.userAgent.match(/MSIE|Edge/i)) {
         overlay.classList.add('fade');
+        popup.classList.add('more-splash');
       } else if (isMobile()) {
       } else {
         let a = 0;
+        popup.style.top = "50px";
         let timer = setInterval(function() {
           if (popup.style.top == '150px') {
             clearInterval(timer);
-          }
-          else {
+          } else {
             a += 2;
             popup.style.top = a + 'px';
-            console.log(a);
-            console.log(popup.style.top);
           }
         }, 20)
       }
-      more.classList.add('more-splash');
       document.body.style.overflow = 'hidden';    
     });
   });

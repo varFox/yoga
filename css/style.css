@@ -428,6 +428,9 @@ header ul li:before {
 .content .more:hover {
   box-shadow: 0 0 10px #c78030;
 }
+.content .more-splash {
+  position: absolute;
+}
 .content .contact {
   width: 86%;
   height: 400px;
