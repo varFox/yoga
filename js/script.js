@@ -81,7 +81,6 @@ window.addEventListener('DOMContentLoaded', function() {
     function updateClock() {
       let t = getTimeRemaining(endtime);
       hours.textContent = zero(t.hours) ;
-      console.log(t.hours);
       minutes.textContent = zero(t.minutes);
       seconds.textContent = zero(t.seconds);
 
@@ -95,6 +94,85 @@ window.addEventListener('DOMContentLoaded', function() {
   }
 
   setClock('timer', deadline);
+
+  // modal
+
+  let more = document.querySelector('.more'),
+      overlay = document.querySelector('.overlay'),
+      close = document.querySelector('.popup-close'),
+      popup = document.querySelector('.popup');
+      
+
+  function isMobile() {
+    if (navigator.userAgent.match(/Android|BlackBerry|iPhone|iPad|iPod|Opera Mini|IEMobile/i)) {
+      return true;
+    }
+    return false;
+  }
+
+  more.addEventListener('click', () => {
+    overlay.style.display = 'block';
+    popup.style.top = "50px";
+    if (navigator.appName == 'Microsoft Internet Explorer') {
+      overlay.classList.add('fade');
+    } else if (isMobile()) {
+    } else {
+      let a = 0;
+      let timer = setInterval(function() {
+        if (popup.style.top == '150px') {
+          clearInterval(timer);
+        }
+        else {
+          a += 2;
+          popup.style.top = a + 'px';
+          console.log(a);
+          console.log(popup.style.top);
+        }
+      }, 20)
+    }
+    
+    more.classList.add('more-splash');
+    document.body.style.overflow = 'hidden';
+  });
+
+  close.addEventListener('click', () => {
+    overlay.style.display = 'none';
+    more.classList.remove('more-splash');
+    document.body.style.overflow = '';
+    if (navigator.appName == 'Microsoft Internet Explorer') {
+      overlay.classList.remove('fade');
+    }
+  });
+
+  let description = document.querySelectorAll('.description-btn');
+
+  description.forEach(item => {
+    item.addEventListener('click', () => {
+      overlay.style.display = 'block';
+      popup.style.top = "50px";
+      if (navigator.appName == 'Microsoft Internet Explorer') {
+        overlay.classList.add('fade');
+      } else if (isMobile()) {
+      } else {
+        let a = 0;
+        let timer = setInterval(function() {
+          if (popup.style.top == '150px') {
+            clearInterval(timer);
+          }
+          else {
+            a += 2;
+            popup.style.top = a + 'px';
+            console.log(a);
+            console.log(popup.style.top);
+          }
+        }, 20)
+      }
+      more.classList.add('more-splash');
+      document.body.style.overflow = 'hidden';    
+    });
+  });
+
+
 });
 
 
