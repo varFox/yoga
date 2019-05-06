@@ -37,11 +37,9 @@ window.addEventListener('DOMContentLoaded', function() {
   let goTo = document.querySelectorAll('.container ul li a');
 
   goTo.forEach(item => {
-    item.addEventListener('click', function (e) {
+    item.addEventListener('click', (e) => {
       e.preventDefault(); 
       let blockID = item.getAttribute('href');
-      console.log(item.getAttribute('href'));
-      
       document.querySelector('' + blockID).scrollIntoView({
         behavior: 'smooth',
         block: 'start'
@@ -119,7 +117,7 @@ window.addEventListener('DOMContentLoaded', function() {
     } else {
       let a = 0;
       popup.style.top = "50px";
-      let timer = setInterval(function() {
+      let timer = setInterval(() => {
         if (popup.style.top == '150px') {
           clearInterval(timer);
         } else {
