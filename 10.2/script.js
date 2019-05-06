@@ -1,3 +1,4 @@
+'use strict';
 class Options {
   constructor(height, width, bg, fontSize, textAlign) {
     this.height = height;
@@ -10,7 +11,6 @@ class Options {
     let nDiv = document.createElement('div');
     nDiv.style.cssText = `height: ${this.height}px; width: ${this.width}px; background: ${this.bg}; font-size: ${this.fontSize}px; text-align: ${this.textAlign}`;
     nDiv.textContent = str;
-    // nDiv.style.cssText = `height: 50px; width: 100px; background: #eee; font-size: 18px; text-align: center`;
     document.body.appendChild(nDiv);
   }
 }
