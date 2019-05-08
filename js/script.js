@@ -167,22 +167,28 @@ window.addEventListener('DOMContentLoaded', function () {
 
   let message = {
     loading: 'Загрузка...',
-    // loadingImg: 'img/ajax-loader.gif',
+    loadingImg: 'img/ajax-loader.gif',
     success: 'Спасибо! Скоро мы с вами свяжемся',
-    // successImg: '',
+    successImg: 'img/smartphone.png',
     failure: 'Что-то пошло не так...'
   };
 
   let form = document.querySelector('.main-form'),
-    input = form.getElementsByTagName('input'),
-    statusMessage = document.createElement('div');
+      input = form.getElementsByTagName('input'),
+      popapForm = document.querySelector('.popup-form'),
+      statusMessage = document.createElement('div'),
+      statusFormImg = document.createElement('img'),
+      statusFormP = document.createElement('p');
 
-  statusMessage.classList.add('status');
+  statusFormImg.style.cssText = 'height: 100px; margin: 10px auto; display: block;';
+  statusMessage.style.cssText = 'width: 100%; text-align: center;';
 
   form.addEventListener('submit', (e) => {
     e.preventDefault();
-    form.appendChild(statusMessage);
-    // form.innerHTML = '<div class="loading__img"></div><p></p>';
+    popapForm.appendChild(statusMessage);
+    statusMessage.appendChild(statusFormImg);
+    statusMessage.appendChild(statusFormP);
+    
 
     let request = new XMLHttpRequest();
     request.open('POST', 'server.php');
@@ -199,12 +205,15 @@ window.addEventListener('DOMContentLoaded', function () {
     request.send(json);
 
     request.addEventListener('readystatechange', () => {
+      form.style.display = 'none';
       if (request.readyState < 4) {
-        statusMessage.textContent = message.loading;
+        statusFormImg.src = message.loadingImg;
+        statusFormP.textContent = message.loading;
       } else if (request.readyState === 4 && request.status == 200) {
-        statusMessage.textContent = message.success;
+        statusFormImg.src = message.successImg;
+        statusFormP.textContent = message.success;
       } else {
-        statusMessage.textContent = message.failures;
+        statusFormP.textContent = message.failures;
       }
     });
 
@@ -245,9 +254,15 @@ window.addEventListener('DOMContentLoaded', function () {
   });
 
   number.addEventListener('focus', () => {
-    number.value = '+7(';
+    if (pos == 0) {
+      number.value = '+7(';
+      pos = 3;
+    }
   });
   number.addEventListener('blur', () => {
-    number.value = '';
+  	if (number.value.slice(-1) == '(') {
+      number.value = '';
+      pos = 0;
+    }
   });
 });
