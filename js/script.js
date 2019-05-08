@@ -164,7 +164,91 @@ window.addEventListener('DOMContentLoaded', function() {
     });
   });
 
+  // form
 
+  let message = {
+    loading: 'Загрузка...',
+    success: 'Спасибо! Скоро мы с вами свяжемся',
+    failure: 'Что-то пошло не так...'
+  };
+
+  let form = document.querySelector('.main-form'),
+      input = form.getElementsByTagName('input'),
+      statusMessage = document.createElement('div');
+
+  statusMessage.classList.add('status');
+
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    form.appendChild(statusMessage);
+
+    let reqest = new XMLHttpRequest();
+    reqest.open('POST', 'server.php');
+    reqest.setRequestHeader('Content-Type', 'application/json; charset=utf-8');
+
+    let formData = new FormData(form);
+
+    let obj = {};
+    formData.forEach(function(value, key) {
+      obj[key] = value;
+    });
+    let json = JSON.stringify(obj);
+
+    reqest.send(json);
+
+    reqest.addEventListener('readystatechange', () => {
+      if (reqest.readyState < 4) {
+        statusMessage.textContent = message.loading;
+      } else if (reqest.readyState === 4 && reqest.status == 200) {
+        statusMessage.textContent = message.success;
+      } else {
+        statusMessage.textContent = message.failures;
+      }
+    });
+
+    for (let i = 0; i < input.length; i++) {
+      input[i].value = '';
+    }
+  });
+
+  // validNumber
+  const number = document.querySelector('.popup-form__input');
+let pos = number.value.length;
+
+
+number.addEventListener('keydown', (e) => {
+  
+  e.preventDefault();
+  if (e.key.match(/[0-9]/) && pos < 16 && (pos == '13' || pos == '10')) {
+    number.value += ' ' + e.key;
+    pos = number.value.length;
+  } else if (e.key.match(/[0-9]/) && pos < 16) {
+    number.value += e.key;
+    pos = number.value.length;
+    if (pos == '6') {
+      number.value += ')';
+    } else if (pos == '10' || pos == '13') {
+      number.value += ' ';
+    }
+    pos = number.value.length;
+  }
+
+  if (e.key == 'Backspace') {
+    if (pos == '12' || pos == '15' || pos == '7') {
+      number.value = number.value.substring(0, pos - 2);
+    } else if (pos > 3) {
+      number.value = number.value.substring(0, pos - 1);
+    }
+    pos = number.value.length;
+  }
+});
+
+number.addEventListener('focus', () => {
+  number.value = '+7(';
+});
+number.addEventListener('blur', () => {
+  number.value = '';
+});
 });
 
 
