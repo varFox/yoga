@@ -1,10 +1,10 @@
-window.addEventListener('DOMContentLoaded', function() {
+window.addEventListener('DOMContentLoaded', function () {
   'use strict';
 
   let tab = document.querySelectorAll('.info-header-tab'),
-      info = document.querySelector('.info-header'),
-      tabContent = document.querySelectorAll('.info-tabcontent');
-  
+    info = document.querySelector('.info-header'),
+    tabContent = document.querySelectorAll('.info-tabcontent');
+
   function hideTabContent(a) {
     for (let i = a; i < tabContent.length; i++) {
       tabContent[i].classList.remove('show');
@@ -17,7 +17,7 @@ window.addEventListener('DOMContentLoaded', function() {
   function showTabContent(b) {
     if (tabContent[b].classList.contains('hide')) {
       tabContent[b].classList.remove('hide');
-      tabContent[b].classList.add('show');      
+      tabContent[b].classList.add('show');
     }
   }
 
@@ -38,13 +38,13 @@ window.addEventListener('DOMContentLoaded', function() {
 
   goTo.forEach(item => {
     item.addEventListener('click', (e) => {
-      e.preventDefault(); 
+      e.preventDefault();
       let blockID = item.getAttribute('href');
       document.querySelector('' + blockID).scrollIntoView({
         behavior: 'smooth',
         block: 'start'
       });
-    });  
+    });
   })
 
   // таймер
@@ -59,26 +59,27 @@ window.addEventListener('DOMContentLoaded', function() {
 
   function getTimeRemaining(endtime) {
     let t = Date.parse(endtime) - Date.parse(new Date()),
-        hs = Math.floor(t /(1000 * 60 * 60)),
-        ms = Math.floor((t / 1000 / 60) % 60),
-        ss = Math.floor((t / 1000) % 60);
+      hs = Math.floor(t / (1000 * 60 * 60)),
+      ms = Math.floor((t / 1000 / 60) % 60),
+      ss = Math.floor((t / 1000) % 60);
     return {
-      'total' : t,
-      'hours' : hs,
-      'minutes' : ms,
-      'seconds' : ss
+      'total': t,
+      'hours': hs,
+      'minutes': ms,
+      'seconds': ss
     };
   }
 
   function setClock(id, endtime) {
     let timer = document.getElementById(id),
-        hours = timer.querySelector('.hours'),
-        minutes = timer.querySelector('.minutes'),
-        seconds = timer.querySelector('.seconds'),
-        timeIntervar = setInterval(updateClock, 1000);
+      hours = timer.querySelector('.hours'),
+      minutes = timer.querySelector('.minutes'),
+      seconds = timer.querySelector('.seconds'),
+      timeIntervar = setInterval(updateClock, 1000);
+
     function updateClock() {
       let t = getTimeRemaining(endtime);
-      hours.textContent = zero(t.hours) ;
+      hours.textContent = zero(t.hours);
       minutes.textContent = zero(t.minutes);
       seconds.textContent = zero(t.seconds);
 
@@ -96,10 +97,10 @@ window.addEventListener('DOMContentLoaded', function() {
   // modal
 
   let more = document.querySelector('.more'),
-      overlay = document.querySelector('.overlay'),
-      close = document.querySelector('.popup-close'),
-      popup = document.querySelector('.popup');
-      
+    overlay = document.querySelector('.overlay'),
+    close = document.querySelector('.popup-close'),
+    popup = document.querySelector('.popup');
+
 
   function isMobile() {
     if (navigator.userAgent.match(/Android|BlackBerry|iPhone|iPad|iPod|Opera Mini|IEMobile/i)) {
@@ -113,8 +114,7 @@ window.addEventListener('DOMContentLoaded', function() {
     if (navigator.userAgent.match(/MSIE|Edge/i)) {
       overlay.classList.add('fade');
       popup.classList.add('more-splash');
-    } else if (isMobile()) {
-    } else {
+    } else if (isMobile()) {} else {
       let a = 0;
       popup.style.top = "50px";
       let timer = setInterval(() => {
@@ -147,11 +147,10 @@ window.addEventListener('DOMContentLoaded', function() {
       if (navigator.userAgent.match(/MSIE|Edge/i)) {
         overlay.classList.add('fade');
         popup.classList.add('more-splash');
-      } else if (isMobile()) {
-      } else {
+      } else if (isMobile()) {} else {
         let a = 0;
         popup.style.top = "50px";
-        let timer = setInterval(function() {
+        let timer = setInterval(function () {
           if (popup.style.top == '150px') {
             clearInterval(timer);
           } else {
@@ -160,7 +159,7 @@ window.addEventListener('DOMContentLoaded', function() {
           }
         }, 20)
       }
-      document.body.style.overflow = 'hidden';    
+      document.body.style.overflow = 'hidden';
     });
   });
 
@@ -173,8 +172,8 @@ window.addEventListener('DOMContentLoaded', function() {
   };
 
   let form = document.querySelector('.main-form'),
-      input = form.getElementsByTagName('input'),
-      statusMessage = document.createElement('div');
+    input = form.getElementsByTagName('input'),
+    statusMessage = document.createElement('div');
 
   statusMessage.classList.add('status');
 
@@ -189,7 +188,7 @@ window.addEventListener('DOMContentLoaded', function() {
     let formData = new FormData(form);
 
     let obj = {};
-    formData.forEach(function(value, key) {
+    formData.forEach(function (value, key) {
       obj[key] = value;
     });
     let json = JSON.stringify(obj);
@@ -213,45 +212,39 @@ window.addEventListener('DOMContentLoaded', function() {
 
   // validNumber
   const number = document.querySelector('.popup-form__input');
-let pos = number.value.length;
+  let pos = number.value.length;
 
+  number.addEventListener('keydown', (e) => {
 
-number.addEventListener('keydown', (e) => {
-  
-  e.preventDefault();
-  if (e.key.match(/[0-9]/) && pos < 16 && (pos == '13' || pos == '10')) {
-    number.value += ' ' + e.key;
-    pos = number.value.length;
-  } else if (e.key.match(/[0-9]/) && pos < 16) {
-    number.value += e.key;
-    pos = number.value.length;
-    if (pos == '6') {
-      number.value += ')';
-    } else if (pos == '10' || pos == '13') {
-      number.value += ' ';
+    e.preventDefault();
+    if (e.key.match(/[0-9]/) && pos < 16 && (pos == '13' || pos == '10')) {
+      number.value += ' ' + e.key;
+      pos = number.value.length;
+    } else if (e.key.match(/[0-9]/) && pos < 16) {
+      number.value += e.key;
+      pos = number.value.length;
+      if (pos == '6') {
+        number.value += ')';
+      } else if (pos == '10' || pos == '13') {
+        number.value += ' ';
+      }
+      pos = number.value.length;
     }
-    pos = number.value.length;
-  }
 
-  if (e.key == 'Backspace') {
-    if (pos == '12' || pos == '15' || pos == '7') {
-      number.value = number.value.substring(0, pos - 2);
-    } else if (pos > 3) {
-      number.value = number.value.substring(0, pos - 1);
+    if (e.key == 'Backspace') {
+      if (pos == '12' || pos == '15' || pos == '7') {
+        number.value = number.value.substring(0, pos - 2);
+      } else if (pos > 3) {
+        number.value = number.value.substring(0, pos - 1);
+      }
+      pos = number.value.length;
     }
-    pos = number.value.length;
-  }
+  });
+
+  number.addEventListener('focus', () => {
+    number.value = '+7(';
+  });
+  number.addEventListener('blur', () => {
+    number.value = '';
+  });
 });
-
-number.addEventListener('focus', () => {
-  number.value = '+7(';
-});
-number.addEventListener('blur', () => {
-  number.value = '';
-});
-});
-
-
-
-
-
