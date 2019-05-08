@@ -167,7 +167,9 @@ window.addEventListener('DOMContentLoaded', function () {
 
   let message = {
     loading: 'Загрузка...',
+    // loadingImg: 'img/ajax-loader.gif',
     success: 'Спасибо! Скоро мы с вами свяжемся',
+    // successImg: '',
     failure: 'Что-то пошло не так...'
   };
 
@@ -180,10 +182,11 @@ window.addEventListener('DOMContentLoaded', function () {
   form.addEventListener('submit', (e) => {
     e.preventDefault();
     form.appendChild(statusMessage);
+    // form.innerHTML = '<div class="loading__img"></div><p></p>';
 
-    let reqest = new XMLHttpRequest();
-    reqest.open('POST', 'server.php');
-    reqest.setRequestHeader('Content-Type', 'application/json; charset=utf-8');
+    let request = new XMLHttpRequest();
+    request.open('POST', 'server.php');
+    request.setRequestHeader('Content-Type', 'application/json; charset=utf-8');
 
     let formData = new FormData(form);
 
@@ -193,12 +196,12 @@ window.addEventListener('DOMContentLoaded', function () {
     });
     let json = JSON.stringify(obj);
 
-    reqest.send(json);
+    request.send(json);
 
-    reqest.addEventListener('readystatechange', () => {
-      if (reqest.readyState < 4) {
+    request.addEventListener('readystatechange', () => {
+      if (request.readyState < 4) {
         statusMessage.textContent = message.loading;
-      } else if (reqest.readyState === 4 && reqest.status == 200) {
+      } else if (request.readyState === 4 && request.status == 200) {
         statusMessage.textContent = message.success;
       } else {
         statusMessage.textContent = message.failures;
