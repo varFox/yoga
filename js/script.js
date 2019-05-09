@@ -132,6 +132,8 @@ window.addEventListener('DOMContentLoaded', function () {
 
   close.addEventListener('click', () => {
     overlay.style.display = 'none';
+    form.style.display = '';
+    statusMessage.innerHTML = '';
     document.body.style.overflow = '';
     if (navigator.userAgent.match(/MSIE|Edge/i)) {
       overlay.classList.remove('fade');
@@ -174,54 +176,69 @@ window.addEventListener('DOMContentLoaded', function () {
   };
 
   let form = document.querySelector('.main-form'),
-      input = form.getElementsByTagName('input'),
-      popapForm = document.querySelector('.popup-form'),
-      statusMessage = document.createElement('div'),
-      statusFormImg = document.createElement('img'),
-      statusFormP = document.createElement('p');
+    input = form.getElementsByTagName('input'),
+    popapForm = document.querySelector('.popup-form'),
+    statusMessage = document.createElement('div'),
+    statusFormImg = document.createElement('img'),
+    statusFormP = document.createElement('p');
 
   statusFormImg.style.cssText = 'height: 100px; margin: 10px auto; display: block;';
   statusMessage.style.cssText = 'width: 100%; text-align: center;';
 
-  form.addEventListener('submit', (e) => {
-    e.preventDefault();
-    popapForm.appendChild(statusMessage);
-    statusMessage.appendChild(statusFormImg);
-    statusMessage.appendChild(statusFormP);
-    
+  function sendForm(elem) {
+    elem.addEventListener('submit', (e) => {
+      e.preventDefault();
+      popapForm.appendChild(statusMessage);
+      statusMessage.appendChild(statusFormImg);
+      statusMessage.appendChild(statusFormP);
+      let formData = new FormData(elem);
 
-    let request = new XMLHttpRequest();
-    request.open('POST', 'server.php');
-    request.setRequestHeader('Content-Type', 'application/json; charset=utf-8');
+      function postData(data) {
+        return new Promise(function (resolve, reject) {
+          let request = new XMLHttpRequest();
+          request.open('POST', 'server.php');
+          request.setRequestHeader('Content-Type', 'application/json; charset=utf-8');
 
-    let formData = new FormData(form);
+          request.onreadystatechange = function () {
+            form.style.display = 'none';
+            if (request.readyState < 4) {
+              resolve();
+            } else if (request.readyState === 4) {
+              if (request.status == 200 && request.status < 300) {
+                resolve();
+              } else {
+                reject();
+              }
 
-    let obj = {};
-    formData.forEach(function (value, key) {
-      obj[key] = value;
-    });
-    let json = JSON.stringify(obj);
-
-    request.send(json);
-
-    request.addEventListener('readystatechange', () => {
-      form.style.display = 'none';
-      if (request.readyState < 4) {
-        statusFormImg.src = message.loadingImg;
-        statusFormP.textContent = message.loading;
-      } else if (request.readyState === 4 && request.status == 200) {
-        statusFormImg.src = message.successImg;
-        statusFormP.textContent = message.success;
-      } else {
-        statusFormP.textContent = message.failures;
+            }
+          }
+          request.send(data);
+        })
       }
+
+      function clearInput() {
+        for (let i = 0; i < input.length; i++) {
+          input[i].value = '';
+        }
+        pos = 0;
+      }
+      postData(formData)
+        .then(() => {
+          statusFormImg.src = message.loadingImg;
+          statusFormP.textContent = message.loading;
+        })
+        .then(() => {
+          statusFormImg.src = message.successImg;
+          statusFormP.textContent = message.success;
+        })
+        .catch(() => statusFormP.textContent = message.failures)
+        .then(clearInput);
     });
+  }
 
-    for (let i = 0; i < input.length; i++) {
-      input[i].value = '';
-    }
-  });
+  sendForm(form);
 
+  
   // validNumber
   const number = document.querySelector('.popup-form__input');
   let pos = number.value.length;
@@ -260,7 +277,7 @@ window.addEventListener('DOMContentLoaded', function () {
     }
   });
   number.addEventListener('blur', () => {
-  	if (number.value.slice(-1) == '(') {
+    if (number.value.slice(-1) == '(') {
       number.value = '';
       pos = 0;
     }
