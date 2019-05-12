@@ -215,11 +215,11 @@ window.addEventListener('DOMContentLoaded', function () {
           }
           let jsonObject = {};
 
-          for (const [key, value] of formData.entries()) {
+          for (const [key, value] of data.entries()) {
             jsonObject[key] = value;
             
           }
-          request.send(jsonObject);
+          request.send(JSON.stringify(jsonObject));
         });
       }
 
