@@ -356,8 +356,16 @@ window.addEventListener('DOMContentLoaded', function () {
     if (persons.value == '' || restDays.value == '') {
       totalValue.innerHTML = 0;
     } else {
-      let a = total;
-      totalValue.innerHTML = a * place.value;
+      let a = total * place.value - 500;
+      // хотите красивое увеличение стоимости вашей поездки?
+      let printNum = setInterval(() => {
+        if (a < total * place.value) {
+          a += 5;
+          totalValue.innerHTML = a;
+        } else {
+          clearInterval(printNum);
+        }
+      }, 5)      
     }
   });
 
