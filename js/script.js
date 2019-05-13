@@ -193,6 +193,7 @@ window.addEventListener('DOMContentLoaded', function () {
       statusMessage.appendChild(statusFormP);
       let formData = new FormData(elem);
 
+
       function postData(data) {
         return new Promise(function (resolve, reject) {
           let request = new XMLHttpRequest();
@@ -204,7 +205,7 @@ window.addEventListener('DOMContentLoaded', function () {
             if (request.readyState < 4) {
               resolve();
             } else if (request.readyState === 4) {
-              if (request.status == 200 && request.status < 300) {
+              if (request.status == 200) {
                 resolve();
               } else {
                 reject();
@@ -212,8 +213,14 @@ window.addEventListener('DOMContentLoaded', function () {
 
             }
           }
-          request.send(data);
-        })
+          let jsonObject = {};
+
+          for (const [key, value] of data.entries()) {
+            jsonObject[key] = value;
+            
+          }
+          request.send(JSON.stringify(jsonObject));
+        });
       }
 
       function clearInput() {
@@ -230,9 +237,12 @@ window.addEventListener('DOMContentLoaded', function () {
         .then(() => {
           statusFormImg.src = message.successImg;
           statusFormP.textContent = message.success;
+
         })
         .catch(() => statusFormP.textContent = message.failures)
         .then(clearInput);
+
+
     });
   }
 
