@@ -382,6 +382,7 @@ window.addEventListener('DOMContentLoaded', function () {
       totalValue.innerHTML = '0';
     } else {
       let a = total * place.value - 500;
+      // хотите красивое увеличение стоимости вашей поездки?
       let printNum = setInterval(() => {
         if (a < total * place.value) {
           a += 5;
