@@ -31,17 +31,6 @@
     top: 0;
   }
 }
-.out-my-fade {
-  animation: outmyfade 2.5s;
-}
-@keyframes outmyfade {
-  from {
-    top: 0;
-  }
-  to {
-    top: -500px;
-  }
-}
 .more-splash {
   animation-name: more;
   animation-duration: 2.5s;
