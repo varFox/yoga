@@ -28,6 +28,32 @@
 	}
 }
 
+.my-fade {
+	animation: myfade 2.5s;
+}
+
+@keyframes myfade {
+	from {
+		top: 500px;
+	}
+
+	to {
+		top: 0;
+	}
+}
+.out-my-fade {
+	animation: outmyfade 2.5s;
+}
+
+@keyframes outmyfade {
+	from {
+		top: 0;
+	}
+
+	to {
+		top: -500px;
+	}
+}
 .more-splash {
 	animation-name: more;
 	animation-duration: 2.5s;
@@ -39,6 +65,7 @@
 	from {
 		transform: translateX(-200%);
 	}
+
 	to {
 		transform: translateX(-50%)
 	}
@@ -48,6 +75,7 @@
 	from {
 		transform: translateX(-200%)
 	}
+
 	to {
 		transform: translateX(-50%)
 	}
@@ -55,7 +83,7 @@
 
 * {
 	-webkit-box-sizing: border-box;
-	        box-sizing: border-box;
+	box-sizing: border-box;
 	margin: 0;
 	padding: 0;
 	outline: none;
@@ -90,10 +118,10 @@ header {
 		display: flex;
 		list-style-type: none;
 		-ms-flex-pack: distribute;
-		    justify-content: space-around;
+		justify-content: space-around;
 		-webkit-box-align: center;
-		    -ms-flex-align: center;
-		        align-items: center;
+		-ms-flex-align: center;
+		align-items: center;
 		color: #fff;
 
 		li {
@@ -185,7 +213,7 @@ header {
 		background-color: @dark;
 		padding: 50px;
 		-webkit-box-shadow: 0px 0px 30px rgba(0, 0, 0, .8);
-		        box-shadow: 0px 0px 30px rgba(0, 0, 0, .8);
+		box-shadow: 0px 0px 30px rgba(0, 0, 0, .8);
 
 		&-header {
 			width: 100%;
@@ -194,7 +222,7 @@ header {
 			display: -ms-flexbox;
 			display: flex;
 			-ms-flex-pack: distribute;
-			    justify-content: space-around;
+			justify-content: space-around;
 
 			&-tab {
 				color: @main-color;
@@ -273,7 +301,7 @@ header {
 
 					&:hover {
 						-webkit-box-shadow: 0px 0px 5px @main-color;
-						        box-shadow: 0px 0px 5px @main-color;
+						box-shadow: 0px 0px 5px @main-color;
 					}
 				}
 			}
@@ -283,13 +311,13 @@ header {
 				display: -ms-flexbox;
 				display: flex;
 				-webkit-box-align: center;
-				    -ms-flex-align: center;
-				        align-items: center;
+				-ms-flex-align: center;
+				align-items: center;
 
 				img {
 					width: 100%;
 					-webkit-box-shadow: 0px 0px 30px rgba(0, 0, 0, .8);
-					        box-shadow: 0px 0px 30px rgba(0, 0, 0, .8);
+					box-shadow: 0px 0px 30px rgba(0, 0, 0, .8);
 				}
 			}
 		}
@@ -358,22 +386,27 @@ header {
 		.wrap {
 			width: 100%;
 			position: relative;
+			height: 500px;
+			overflow: hidden;
 
 			.slider-item {
 				width: 80%;
 				margin: 0 auto;
 				margin-top: 50px;
-				position: relative;
-
+				position: absolute;
+				right: 0;
+				left: 0;
+				display: flex;
 				img {
 					width: 100%;
+					height: 500px;
 				}
 			}
 
 			.prev {
 				position: absolute;
 				cursor: pointer;
-				top: 0;
+				top: 50px;
 				width: 90px;
 				left: 10%;
 				background-color: rgba(0, 0, 0, .0);
@@ -395,10 +428,10 @@ header {
 					background: url(../icons/left-arrow.svg) center no-repeat;
 					background-size: cover;
 					position: absolute;
-					top: 50%;
+					top: 42%;
 					left: 50%;
 					-webkit-transform: translate(-50%);
-					        transform: translate(-50%);
+					transform: translate(-50%);
 					opacity: .4;
 					-webkit-transition: 1s;
 					transition: 1s;
@@ -408,7 +441,7 @@ header {
 			.next {
 				position: absolute;
 				cursor: pointer;
-				top: 0;
+				top: 50px;
 				width: 90px;
 				background-color: rgba(0, 0, 0, .0);
 				-webkit-transition: 0.3s;
@@ -430,10 +463,10 @@ header {
 					background: url(../icons/right-arrow.svg) center no-repeat;
 					background-size: cover;
 					position: absolute;
-					top: 50%;
+					top: 42%;
 					left: 50%;
 					-webkit-transform: translate(-50%);
-					        transform: translate(-50%);
+					transform: translate(-50%);
 					opacity: .4;
 					-webkit-transition: 1s;
 					transition: 1s;
@@ -449,8 +482,8 @@ header {
 			display: -ms-flexbox;
 			display: flex;
 			-webkit-box-pack: center;
-			    -ms-flex-pack: center;
-			        justify-content: center;
+			-ms-flex-pack: center;
+			justify-content: center;
 
 			.dot {
 				cursor: pointer;
@@ -496,11 +529,11 @@ header {
 			display: -ms-flexbox;
 			display: flex;
 			-webkit-box-pack: justify;
-			    -ms-flex-pack: justify;
-			        justify-content: space-between;
+			-ms-flex-pack: justify;
+			justify-content: space-between;
 			-webkit-box-align: center;
-			    -ms-flex-align: center;
-			        align-items: center;
+			-ms-flex-align: center;
+			align-items: center;
 
 			&-option {
 				font-size: 22px;
@@ -572,7 +605,7 @@ header {
 
 		&:hover {
 			-webkit-box-shadow: 0 0 10px @main-color;
-			        box-shadow: 0 0 10px @main-color;
+			box-shadow: 0 0 10px @main-color;
 		}
 	}
 
@@ -588,7 +621,7 @@ header {
 	margin: 0 auto;
 	margin-top: 150px;
 	-webkit-box-shadow: 0px 0px 30px rgba(0, 0, 0, .8);
-	        box-shadow: 0px 0px 30px rgba(0, 0, 0, .8);
+	box-shadow: 0px 0px 30px rgba(0, 0, 0, .8);
 
 	&-img {
 		width: 50%;
@@ -596,7 +629,7 @@ header {
 		img {
 			height: 550px;
 			-webkit-transform: translateY(-13%);
-			        transform: translateY(-13%);
+			transform: translateY(-13%);
 		}
 	}
 
@@ -643,7 +676,7 @@ header {
 
 				&:hover {
 					-webkit-box-shadow: 0 0 10px @main-color;
-					        box-shadow: 0 0 10px @main-color;
+					box-shadow: 0 0 10px @main-color;
 				}
 			}
 		}
@@ -657,19 +690,19 @@ footer {
 	display: -ms-flexbox;
 	display: flex;
 	-webkit-box-align: center;
-	    -ms-flex-align: center;
-	        align-items: center;
+	-ms-flex-align: center;
+	align-items: center;
 
 	.social {
 		display: -webkit-box;
 		display: -ms-flexbox;
 		display: flex;
 		-webkit-box-pack: center;
-		    -ms-flex-pack: center;
-		        justify-content: center;
+		-ms-flex-pack: center;
+		justify-content: center;
 		-webkit-box-align: center;
-		    -ms-flex-align: center;
-		        align-items: center;
+		-ms-flex-align: center;
+		align-items: center;
 		padding-top: 20px;
 
 		.social-block {
@@ -680,7 +713,7 @@ footer {
 
 			&:hover {
 				-webkit-box-shadow: 0 0 10px @main-color;
-				        box-shadow: 0 0 10px @main-color;
+				box-shadow: 0 0 10px @main-color;
 			}
 
 			a {
@@ -711,7 +744,7 @@ footer {
 		top: 150px;
 		width: 752px;
 		-webkit-transform: translateX(-50%);
-		        transform: translateX(-50%);
+		transform: translateX(-50%);
 
 		&-close {
 			position: absolute;
@@ -815,7 +848,7 @@ footer {
 
 				&:hover {
 					-webkit-box-shadow: 0 0 10px @main-color;
-					        box-shadow: 0 0 10px @main-color;
+					box-shadow: 0 0 10px @main-color;
 				}
 			}
 		}

@@ -132,7 +132,7 @@ window.addEventListener('DOMContentLoaded', function () {
 
   close.addEventListener('click', () => {
     overlay.style.display = 'none';
-    form.style.display = '';
+    mainForm.style.display = '';
     statusMessage.innerHTML = '';
     document.body.style.overflow = '';
     if (navigator.userAgent.match(/MSIE|Edge/i)) {
@@ -175,20 +175,23 @@ window.addEventListener('DOMContentLoaded', function () {
     failure: 'Что-то пошло не так...'
   };
 
-  let form = document.querySelector('.main-form'),
+  let mainForm = document.querySelector('.main-form'),
+    form = document.querySelector('#form'),
     input = form.getElementsByTagName('input'),
     popapForm = document.querySelector('.popup-form'),
+    contactForm = document.querySelector('.contact-form'),
+    
     statusMessage = document.createElement('div'),
     statusFormImg = document.createElement('img'),
     statusFormP = document.createElement('p');
 
   statusFormImg.style.cssText = 'height: 100px; margin: 10px auto; display: block;';
-  statusMessage.style.cssText = 'width: 100%; text-align: center;';
+  statusMessage.style.cssText = 'width: 100%; text-align: center; color: white';
 
-  function sendForm(elem) {
+  function sendForm(elem, popap) {
     elem.addEventListener('submit', (e) => {
       e.preventDefault();
-      popapForm.appendChild(statusMessage);
+      popap.appendChild(statusMessage);
       statusMessage.appendChild(statusFormImg);
       statusMessage.appendChild(statusFormP);
       let formData = new FormData(elem);
@@ -201,7 +204,7 @@ window.addEventListener('DOMContentLoaded', function () {
           request.setRequestHeader('Content-Type', 'application/json; charset=utf-8');
 
           request.onreadystatechange = function () {
-            form.style.display = 'none';
+            elem.style.display = 'none';
             if (request.readyState < 4) {
               resolve();
             } else if (request.readyState === 4) {
@@ -237,7 +240,6 @@ window.addEventListener('DOMContentLoaded', function () {
         .then(() => {
           statusFormImg.src = message.successImg;
           statusFormP.textContent = message.success;
-
         })
         .catch(() => statusFormP.textContent = message.failures)
         .then(clearInput);
@@ -246,40 +248,50 @@ window.addEventListener('DOMContentLoaded', function () {
     });
   }
 
-  sendForm(form);
-
+  sendForm(form, contactForm);
+  sendForm(mainForm, popapForm);
 
   // validNumber
-  const number = document.querySelector('.popup-form__input');
-  let pos = number.value.length;
+  const number = document.querySelector('.popup-form__input'),
+        telNumber = document.querySelectorAll('#form input')[1];
+  let pos = number.value.length,
+      telPos = telNumber.value.length;
 
   number.addEventListener('keydown', (e) => {
+    validNumber(e, number, pos);
+  });
+ 
+  telNumber.addEventListener('keydown', (e) => {
+    validNumber(e, telNumber, telPos);
+  });
 
+  function validNumber(e, input, pos) {
+    pos = input.value.length;
     e.preventDefault();
     if (e.key.match(/[0-9]/) && pos < 16 && (pos == '13' || pos == '10')) {
-      number.value += ' ' + e.key;
-      pos = number.value.length;
+      input.value += ' ' + e.key;
+      pos = input.value.length;
     } else if (e.key.match(/[0-9]/) && pos < 16) {
-      number.value += e.key;
-      pos = number.value.length;
+      input.value += e.key;
+      pos = input.value.length;
       if (pos == '6') {
-        number.value += ')';
+        input.value += ')';
       } else if (pos == '10' || pos == '13') {
-        number.value += ' ';
+        input.value += ' ';
       }
-      pos = number.value.length;
+      pos = input.value.length;
     }
 
     if (e.key == 'Backspace') {
       if (pos == '12' || pos == '15' || pos == '7') {
-        number.value = number.value.substring(0, pos - 2);
+        input.value = input.value.substring(0, pos - 2);
       } else if (pos > 3) {
-        number.value = number.value.substring(0, pos - 1);
+        input.value = input.value.substring(0, pos - 1);
       }
-      pos = number.value.length;
+      pos = input.value.length;
     }
-  });
-
+    return pos;
+  }
   number.addEventListener('focus', () => {
     if (pos == 0) {
       number.value = '+7(';
@@ -290,6 +302,18 @@ window.addEventListener('DOMContentLoaded', function () {
     if (number.value.slice(-1) == '(') {
       number.value = '';
       pos = 0;
+    }
+  });
+  telNumber.addEventListener('focus', () => {
+    if (telPos == 0) {
+      telNumber.value = '+7(';
+      telPos = 3;
+    }
+  });
+  telNumber.addEventListener('blur', () => {
+    if (telNumber.value.slice(-1) == '(') {
+      telNumber.value = '';
+      telPos = 0;
     }
   });
 
@@ -309,11 +333,17 @@ window.addEventListener('DOMContentLoaded', function () {
     if (n < 1) {
       slideIndex = slides.length;
     }
-    slides.forEach((item) => item.style.display = 'none');
     dots.forEach((item) => item.classList.remove('dot-active'));
+    slides.forEach((item) => {
+      item.style.display = 'none'
+      item.classList.remove('my-fade');
+      item.classList.remove('out-my-fade');
+    });
 
-    slides[slideIndex - 1].style.display = 'block';
     dots[slideIndex - 1].classList.add('dot-active');
+    slides[slideIndex - 1].classList.add('my-fade');
+    slides[slideIndex - 1].style.display = '';
+    
   }
   showSlides(slideIndex);
 
@@ -357,7 +387,7 @@ window.addEventListener('DOMContentLoaded', function () {
       totalValue.innerHTML = 0;
     } else {
       let a = total * place.value - 500;
-      // хотите красивое увеличение стоимости вашей поездки?
+      if (a < 0) a = 0;
       let printNum = setInterval(() => {
         if (a < total * place.value) {
           a += 5;
@@ -390,6 +420,7 @@ window.addEventListener('DOMContentLoaded', function () {
       totalValue.innerHTML = '0';
     } else {
       let a = total * place.value - 500;
+      if (a < 0) a = 0;
       // хотите красивое увеличение стоимости вашей поездки?
       let printNum = setInterval(() => {
         if (a < total * place.value) {
