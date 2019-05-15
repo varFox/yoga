@@ -383,7 +383,7 @@ window.addEventListener('DOMContentLoaded', function () {
   totalValue.innerHTML = '0';
 
   place.addEventListener('change', function () {
-    if (persons.value == '' || restDays.value == '') {
+    if (persons.value == '' || restDays.value == '' || persons.value == '0' || restDays.value == '0') {
       totalValue.innerHTML = 0;
     } else {
       let a = total * place.value - 500;
@@ -416,7 +416,7 @@ window.addEventListener('DOMContentLoaded', function () {
     daysSum = +input.value;
 
     total = (daysSum + personsSum) * 4000;
-    if ((persons.value == '' || restDays.value == '')) {
+    if ((persons.value == '' || restDays.value == '' || persons.value == '0' || restDays.value == '0')) {
       totalValue.innerHTML = '0';
     } else {
       let a = total * place.value - 500;
